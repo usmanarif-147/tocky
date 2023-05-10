@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Platform\AddPlatformRequest;
+use App\Http\Requests\Api\Platform\IncrementRequest;
 use App\Http\Requests\Api\Platform\PlatformRequest;
 use App\Http\Requests\Api\Platform\SwapPlatformRequest;
 use App\Models\Platform;
@@ -56,7 +57,7 @@ class PlatformController extends Controller
     //         return response()->json(["message" => $ex->getMessage()]);
     //     }
     // }
-    
+
     public function add(AddPlatformRequest $request)
     {
 
@@ -146,7 +147,7 @@ class PlatformController extends Controller
         // }
 
         // return response()->json(['message' => "Order swapped successfully"]);
-        
+
         if (!is_array($request->orderList)) {
             return response()->json(['message' => "order list must be an array"]);
         }
@@ -198,6 +199,23 @@ class PlatformController extends Controller
         } catch (Exception $ex) {
             return response()->json(['message' => $ex->getMessage()]);
         }
+    }
+
+    /**
+     * Increment Click
+     */
+    public function incrementClick(IncrementRequest $request)
+    {
+        if ($request->user_id == auth()->id()) {
+            return response()->json(['message' => 'You can not click your own platform']);
+        }
+
+        DB::table('user_platforms')
+            ->where('platform_id', $request->platform_id)
+            ->where('user_id', $request->user_id)
+            ->increment('clicks');
+
+        return response()->json(['message' => 'Platform clicked successfully']);
     }
 
     /**

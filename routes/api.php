@@ -41,7 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // User
         Route::post('/connect', [UserController::class, 'connect']);
-        // Route::get('/search', [UserController::class, 'search']);
+        Route::get('/analytics', [UserController::class, 'analytics']);
         Route::post('/privateProfile', [UserController::class, 'privateProfile']);
         Route::post('/recoverAccount', [AuthController::class, 'recoverAccount']);
         Route::get('/deactivateAccount', [UserController::class, 'deactivateAccount']);
@@ -63,6 +63,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/removePlatform', [PlatformController::class, 'remove']);
         Route::post('/swapOrder', [PlatformController::class, 'swap']);
         Route::post('/platformDirect', [PlatformController::class, 'direct']);
+        Route::post('/platformClick', [PlatformController::class, 'incrementClick']);
 
         // Phone Contact
         Route::get('/phoneContacts', [PhoneContactController::class, 'index']);
@@ -87,7 +88,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/cardProfileDetail', [CardController::class, 'cardProfileDetail']);
         Route::post('/activateCard', [CardController::class, 'activateCard']);
         Route::post('/changeCardStatus', [CardController::class, 'changeCardStatus']);
-        
+
         // Connects
         Route::post('/connect', [ConnectController::class, 'connect']);
         Route::post('/disconnect', [ConnectController::class, 'disconnect']);

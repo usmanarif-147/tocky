@@ -68,6 +68,8 @@ class CardController extends Controller
 
         $categoryService = new CategoryService();
 
+        User::where('id', $res['user']->id)->increment('tiks');
+
         return response()->json([
             'message' => 'User profile',
             'user' => $res['user'],

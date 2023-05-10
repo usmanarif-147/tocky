@@ -15,23 +15,7 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        // $platforms = DB::table('user_platforms')
-        //     ->select(
-        //         'platforms.id',
-        //         'platforms.title',
-        //         'platforms.icon',
-        //         'platforms.input',
-        //         'platforms.baseUrl',
-        //         'user_platforms.created_at',
-        //         'user_platforms.path',
-        //         'user_platforms.label',
-        //         'user_platforms.direct',
-        //     )
-        //     ->join('platforms', 'platforms.id', 'user_platforms.platform_id')
-        //     ->where('user_id', auth()->id())
-        //     ->get();
-            
-            $platforms = DB::table('user_platforms')
+        $platforms = DB::table('user_platforms')
             ->select(
                 'platforms.id',
                 'platforms.title',
@@ -116,20 +100,20 @@ class ProfileController extends Controller
     public function userDirect()
     {
         $user = auth()->user();
-        
-        if($user->user_direct) {
+
+        if ($user->user_direct) {
             User::where('id', $user->id)
-            ->update(
-                [
-                    'user_direct' => 0
-                ]
-            );
-            
+                ->update(
+                    [
+                        'user_direct' => 0
+                    ]
+                );
+
             $user = User::find(auth()->id());
-            
-            return response()->json(['message' => 'All platforms are set to public' , 'profile' => new ProfileResource($user)]);
+
+            return response()->json(['message' => 'All platforms are set to public', 'profile' => new ProfileResource($user)]);
         }
-        
+
         User::where('id', auth()->id())
             ->update(
                 [

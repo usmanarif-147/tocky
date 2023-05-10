@@ -30,10 +30,14 @@ class GroupController extends Controller
 
     public function group(GroupDetailsRequest $request)
     {
-        $group = Group::where('id', $request->group_id)->first();
+        $group = Group::where('id', $request->group_id)
+            ->where('user_id', auth()->id())
+            ->first();
         if (!$group) {
             return response()->json(['message' => 'Group not found']);
         }
+
+
 
         $groupContacts = Group::select(
             'contacts.*'

@@ -14,7 +14,6 @@ class UserController extends Controller
 {
     public function connect(ConnectRequest $request)
     {
-
         $connected = DB::table('connects')->where('connected_id', $request->connect_id)
             ->where('connecting_id', auth()->id())->first();
         if ($connected) {
@@ -42,21 +41,21 @@ class UserController extends Controller
      */
     public function privateProfile()
     {
-        
+
         $user = auth()->user();
-        
-        if($user->private) {
+
+        if ($user->private) {
             User::where('id', $user->id)
-            ->update(
-                [
-                    'private' => 0
-                ]
-            );
-            
+                ->update(
+                    [
+                        'private' => 0
+                    ]
+                );
+
             $user = User::find(auth()->id());
-            return response()->json(['message' => "Profile is set to public" , 'profile' => new ProfileResource($user)]);
+            return response()->json(['message' => "Profile is set to public", 'profile' => new ProfileResource($user)]);
         }
-        
+
         User::where('id', auth()->id())
             ->update(
                 [
@@ -65,25 +64,6 @@ class UserController extends Controller
             );
         $user = User::find(auth()->id());
         return response()->json(['message' => "Profile is set to private", 'profile' => new ProfileResource($user)]);
-        
-        
-        // User::where('id', auth()->id())->update(
-        //     [
-        //         'private' => auth()->user()->private ? 1 : 0
-        //     ]
-        // );
-
-        // $status = 'Public';
-        // if (auth()->user()->private) {
-        //     $status = 'Private';
-        // }
-
-        // return response()->json(
-        //     [
-        //         'message' => "Profile is set to " . $status, 
-        //         'profile' => new ProfileResource(auth()->user()),
-        // ]
-        // );
     }
 
     /**
@@ -113,73 +93,35 @@ class UserController extends Controller
         return response()->json(['message' => 'Something went wrong']);
     }
 
-    // public function search()
-    // {
-    //     $q = $_GET['q'] ?? '';
-    //     $res['connected'] = $this->custom->searchUsers($q);
-    //     $res['featured'] = $this->db->table('users')->where('featured', 1)->get();
-    //     $this->response->success("Searched Profiles", $res);
-    // }
+    /**
+     * Analytics
+     */
+    public function analytics()
+    {
+        $connections = DB::table('connects')->where('connecting_id', auth()->id())->get()->count();
+        $profileViews = User::where('id', auth()->id())->first()->tiks;
+
+        $platforms = DB::table('user_platforms')
+            ->select(
+                'platforms.id',
+                'platforms.title',
+                'platforms.icon',
+                'user_platforms.path',
+                'user_platforms.label',
+                'user_platforms.clicks',
+            )
+            ->join('platforms', 'platforms.id', 'user_platforms.platform_id')
+            ->where('user_id', auth()->id())
+            ->orderBy(('user_platforms.platform_order'))
+            ->get();
 
 
-    // public function searchUsers($key, $id = LOGGED_USER)
-    // {
-    //     $AND = '';
-    //     if (!empty($key)) {
-    //         $AND = " AND ( name LIKE ? OR username LIKE ? ) ";
-    //         // LEFT JOIN connects on connects.connected_id=users.id
-    //     }
-    //     $query = "SELECT users.*,connected_id,connecting_id
-    // 		FROM connects
-    // 		INNER JOIN users on users.id=connected_id
-    // 		WHERE connecting_id=$id AND users.status=1 AND featured = 0
-    // 		$AND
-    // 		GROUP BY users.id
-    // 	";
-
-    //     if (!empty($key)) {
-    //         $key = addslashes($key);
-    //         $vals[0] = "%$key%";
-    //         $vals[1] = $vals[0];
-    //         $users = $this->db->getDataWithQuery($query, $vals, 'ss');
-    //     } else {
-    //         $users = $this->db->getDataWithQuery($query);
-    //     }
-    //     foreach ($users as $user) {
-    //         $user->id = (int)$user->id;
-    //         $user->connecting_id = (int)$user->connecting_id;
-    //         $user->connected_id = (int)$user->connected_id;
-    //         $user->tiks = (int)$user->tiks;
-    //         $user->gender = (int)$user->gender;
-    //         $user->private = (int)$user->private;
-    //         $user->status = (int)$user->status;
-    //         $user->featured = (int)$user->featured;
-    //         $user->verified = (int)$user->verified;
-    //         $user->connected = "1";
-    //     }
-    //     return $users;
-    // }
-
-    // public function getDataWIthQuery($query, $vals = [], $types = '')
-    // {
-    //     $data = array();
-    //     if (empty($vals)) {
-    //         $result = $this
-    //             ->conn
-    //             ->query($query) or die($this
-    //                 ->conn
-    //                 ->error);
-    //         while ($row = $result->fetch_object()) $data[] = $row;
-    //     } else if (is_array($vals)) {
-    //         if (empty($types)) foreach ($vals as $val) $types .= $this->returnTypeOfVar($val);
-
-    //         $this->stmt = $this->conn->prepare($query) or die($this->conn->error);
-    //         $this->bind_custom_param($vals, $types);
-    //         $this->stmt->execute() or die($this->stmt->error);
-    //         $result = $this->stmt->get_result();
-    //         while ($row = $result->fetch_object()) $data[] = $row;
-    //     }
-    //     $this->emptyObj();
-    //     return $data;
-    // }
+        return response()->json(
+            [
+                'connections' => $connections,
+                'profileViews' => $profileViews,
+                'platforms' => $platforms
+            ]
+        );
+    }
 }
