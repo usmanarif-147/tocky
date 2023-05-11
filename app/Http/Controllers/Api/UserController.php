@@ -118,7 +118,12 @@ class UserController extends Controller
 
         return response()->json(
             [
-                'users' => ['connections' => $connections, 'profileViews' => $profileViews],
+                'users' => [
+                    'connections' => $connections,
+                    'profileViews' => $profileViews,
+                    'total_clicks' => $platforms->sum('clicks'),
+                    'total_groups' => Group::where('user_id', auth()->id())->count()
+                ],
                 'platforms' => $platforms
             ]
         );

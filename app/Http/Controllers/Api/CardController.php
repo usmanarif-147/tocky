@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Card\CardRequest;
 use App\Models\Card;
-use App\Models\User;
-use App\Services\CategoryService;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -27,54 +25,6 @@ class CardController extends Controller
             ->get();
 
         return response()->json(['data' => $cards]);
-    }
-
-    public function cardProfileDetail(CardRequest $request)
-    {
-        $card = Card::where('uuid', $request->card_uuid)->first();
-        if (!$card) {
-            return  response()->json(['message' => 'Card not found']);
-        }
-
-        // check card status
-        if (!$card->status) {
-            return  response()->json(['message' => "Card is not activated"]);
-        }
-
-        // check user card status is active or not
-        $checkCard = DB::table('user_cards')
-            ->select('user_cards.user_id')
-            ->where('card_id', $card->id)
-            ->where('status', 1)
-            ->first();
-        if (!$checkCard) {
-            return  response()->json(['message' => "User profile not accessible"]);
-        }
-
-        $res['user'] = User::where('id', $checkCard->user_id)->first();
-        if (!$res['user']) {
-            return  response()->error("Profile not found");
-        }
-
-        $res['user']->connected = 0;
-        if ($res['user']->id != auth()->id()) {
-            $connected = DB::table('connects')->where('connecting_id', auth()->id())
-                ->where('connected_id', $res['user']->id)
-                ->first();
-            if ($connected) {
-                $res['user']->connected = 1;
-            }
-        }
-
-        $categoryService = new CategoryService();
-
-        User::where('id', $res['user']->id)->increment('tiks');
-
-        return response()->json([
-            'message' => 'User profile',
-            'user' => $res['user'],
-            'categories' => $categoryService->categoryWithPlatorms($res['user']->id)
-        ]);
     }
 
     public function activateCard(CardRequest $request)
@@ -112,7 +62,6 @@ class CardController extends Controller
 
     public function changeCardStatus(CardRequest $request)
     {
-
         // check card exist
         $card = Card::where('uuid', $request->card_uuid)->first();
         if (!$card) {

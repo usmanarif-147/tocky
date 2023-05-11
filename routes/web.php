@@ -95,9 +95,6 @@ Route::middleware('auth:admin')->group(function () {
 
     // profile
     Route::post('/changePassword', [ProfileController::class, 'changePassword'])->name('profile.change.password');
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__ . '/auth.php';

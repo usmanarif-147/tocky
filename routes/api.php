@@ -10,7 +10,7 @@ use App\Http\Controllers\Api\PlatformController;
 use App\Http\Controllers\Api\ProfileController as UserProfileController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ConnectController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\ViewProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,9 +24,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/test', function () {
-    dd("working");
-});
 
 Route::post('register', [AuthController::class, 'register'])->middleware(['deviceId.headers', 'throttle:6,1']);
 Route::post('login', [AuthController::class, 'login'])->middleware(['deviceId.headers', 'throttle:6,1']);
@@ -85,9 +82,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // Cards
         Route::get('/cards', [CardController::class, 'index']);
-        Route::post('/cardProfileDetail', [CardController::class, 'cardProfileDetail']);
         Route::post('/activateCard', [CardController::class, 'activateCard']);
         Route::post('/changeCardStatus', [CardController::class, 'changeCardStatus']);
+
+        // View User Profile
+        Route::post('/viewUserProfile', [ViewProfileController::class, 'viewUserProfile']);
 
         // Connects
         Route::post('/connect', [ConnectController::class, 'connect']);
