@@ -118,8 +118,7 @@ class UserController extends Controller
 
         return response()->json(
             [
-                'connections' => $connections,
-                'profileViews' => $profileViews,
+                'users' => ['connections' => $connections, 'profileViews' => $profileViews],
                 'platforms' => $platforms
             ]
         );
