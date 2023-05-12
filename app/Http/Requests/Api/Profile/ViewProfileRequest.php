@@ -26,16 +26,18 @@ class ViewProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required_without_all:card_uuid',
-            'card_uuid' => 'required_without_all:username',
+            'username' => 'required_without_all:card_uuid,connect_id',
+            'card_uuid' => 'required_without_all:username,connect_id',
+            'connect_id' => 'required_without_all:username,card_uuid'
         ];
     }
 
     public function messages()
     {
         return [
-            'username.required_without_all' => 'Please enter either a username or card uuid.',
-            'card_uuid.required_without_all' => 'Please enter either a username or card uuid.',
+            'username.required_without_all' => 'Please enter username, card uuid or connect_id',
+            'card_uuid.required_without_all' => 'Please enter username, card uuid or connect_id',
+            'connect_id.required_without_all' => 'Please enter username, card uuid or connect_id',
         ];
     }
 

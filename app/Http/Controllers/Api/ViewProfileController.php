@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Profile\ViewProfileRequest;
+use App\Http\Resources\Api\PlatformResource;
 use App\Models\Card;
 use App\Models\User;
 use App\Services\CategoryService;
@@ -38,8 +39,12 @@ class ViewProfileController extends Controller
 
         if ($checkCard) {
             $res['user'] = User::where('id', $checkCard->user_id)->first();
-        } else {
+        }
+        if ($request->has('username')) {
             $res['user'] = User::where('username', $request->username)->first();
+        }
+        if ($request->has('connect_id')) {
+            $res['user'] = User::where('id', $request->connect_id)->first();
         }
         if (!$res['user']) {
             return response()->json(['message' => "User profile not found"]);
@@ -55,17 +60,35 @@ class ViewProfileController extends Controller
             }
         }
 
-        $categoryService = new CategoryService();
+        // $categoryService = new CategoryService();
 
         if ($res['user']->id != auth()->id() || $res['user']->username != auth()->user()->username) {
             User::where('id', $res['user']->id)->increment('tiks');
         }
 
+        $platforms = DB::table('user_platforms')
+            ->select(
+                'platforms.id',
+                'platforms.title',
+                'platforms.icon',
+                'platforms.input',
+                'platforms.baseUrl',
+                'user_platforms.created_at',
+                'user_platforms.path',
+                'user_platforms.label',
+                'user_platforms.platform_order',
+                'user_platforms.direct',
+            )
+            ->join('platforms', 'platforms.id', 'user_platforms.platform_id')
+            ->where('user_id', $res['user']->id)
+            ->orderBy(('user_platforms.platform_order'))
+            ->get();
 
         return response()->json([
             'message' => 'User profile',
             'user' => $res['user'],
-            'categories' => $categoryService->categoryWithPlatorms($res['user']->id)
+            'platforms' => PlatformResource::collection($platforms)
+            // 'categories' => $categoryService->categoryWithPlatorms($res['user']->id)
         ]);
     }
 }

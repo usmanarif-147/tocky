@@ -118,11 +118,32 @@ class UserController extends Controller
 
         return response()->json(
             [
-                'users' => [
-                    'connections' => $connections,
-                    'profileViews' => $profileViews,
-                    'total_clicks' => $platforms->sum('clicks'),
-                    'total_groups' => Group::where('user_id', auth()->id())->count()
+                'user' => [
+                    [
+                        'label' => 'Connections',
+                        'connections' => $connections,
+                        'icon' => 'uploads/photos/total_connections.png',
+                    ],
+                    [
+                        'label' => 'Profile Views',
+                        'profileViews' => $profileViews,
+                        'icon' => 'uploads/photos/profile_views.png',
+                    ],
+                    [
+                        'label' => 'Platform Clicks',
+                        'total_clicks' => $platforms->sum('clicks'),
+                        'icon' => 'uploads/photos/total_clicks.png',
+                    ],
+                    [
+                        'label' => 'Platforms',
+                        'total_platforms' => $platforms->count(),
+                        'icon' => 'uploads/photos/total_platforms.png',
+                    ],
+                    [
+                        'label' => 'Groups',
+                        'total_groups' => Group::where('user_id', auth()->id())->count(),
+                        'icon' => 'uploads/photos/total_groups.png',
+                    ],
                 ],
                 'platforms' => $platforms
             ]

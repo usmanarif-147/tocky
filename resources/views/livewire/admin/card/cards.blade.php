@@ -45,6 +45,7 @@
                             <tr>
                                 <th>Uuid</th>
                                 <th>Activation Code</th>
+                                <th>Assigned To</th>
                                 <th>Description</th>
                                 <th>Status</th>
                                 <th>Actions</th>
@@ -60,17 +61,20 @@
                                                     value="{{ $card->uuid }}">
                                                 {{ $card->uuid }}
                                             </div>
-                                            <!--<div class="col-md-2">-->
-                                            <!--    <a href="javascript:void(0)" onclick="copy('{{ $card->id }}')">-->
-                                            <!--        <i class="bx bx-clipboard" data-toggle="tooltip"-->
-                                            <!--            data-placement="top" title="Copy Link" aria-hidden="true"></i>-->
-                                            <!--    </a>-->
+                                            <div class="col-md-2">
+                                                <a href="javascript:void(0)" onclick="copy('{{ $card->id }}')">
+                                                    <i class="bx bx-clipboard" data-toggle="tooltip"
+                                                        data-placement="top" title="Copy Link" aria-hidden="true"></i>
+                                                </a>
 
-                                            <!--</div>-->
+                                            </div>
                                         </div>
                                     </td>
                                     <td>
                                         {{ $card->activation_code }}
+                                    </td>
+                                    <td>
+                                        {{ $card->username ? $card->username : '--' }}
                                     </td>
                                     <td>
                                         {{ $card->description ?? 'N/A' }}

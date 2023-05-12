@@ -47,13 +47,21 @@ class Cards extends Component
 
     public function getFilteredData()
     {
-        $filteredData = Card::when($this->searchQuery, function ($query) {
-            
-            $query->where(function ($query) {
+        $filteredData = Card::select(
+            'cards.uuid',
+            'cards.activation_code',
+            'cards.description',
+            'cards.status',
+            'users.username',
+        )
+            ->leftJoin('user_cards', 'user_cards.card_id', 'cards.id')
+            ->leftJoin('users', 'users.id', 'user_cards.user_id')
+            ->when($this->searchQuery, function ($query) {
+                $query->where(function ($query) {
                     $query->where('uuid', 'like', "%$this->searchQuery%")
                         ->orWhere('activation_code', 'like', "%$this->searchQuery%");
                 });
-        })
+            })
             ->when($this->filterByStatus, function ($query) {
                 if ($this->filterByStatus == 1) {
                     $query->where('status', 1);
@@ -62,7 +70,6 @@ class Cards extends Component
                     $query->where('status', 0);
                 }
             });
-        // ->orderBy('created_at', 'desc');
         return $filteredData;
     }
 

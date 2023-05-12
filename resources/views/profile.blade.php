@@ -2,156 +2,215 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <title>Tocky</title>
 
-    <!---------------------------------------------- Custom CSS Link ----------------------------------------->
+    <!-- Link Stylesheet -->
+    <link rel="stylesheet" href="{{ asset('profile/style.css') }}" />
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+    <!------------------------------------------------ Boxicon CDN ------------------------------------------->
 
-    <link rel="stylesheet" href="{{ asset('assets/css/profile_style.css') }}" />
-
-    <title>GoTap Profile</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 </head>
 
 <body>
-    <!------------------------------------------ Header Section Started -------------------------------------->
-
-    <header>
-        <div class="bg-dark fixed-top">
-            <a href="" class="text-decoration-none">
-                <h5 class="text-center text-light p-3">
-                    Tap here to get your GoTap Profile
-                </h5>
-            </a>
-        </div>
-    </header>
-
-    <!------------------------------------------- Header Section Ended --------------------------------------->
-
-    <!----------------------------------------- Cover Pic Section Started ------------------------------------>
+    <!-- Hero Section -->
 
     <section>
-        <div class="container">
-            <div class="row d-flex justify-content-center">
-                <div class="col-12 col-md-5 border shadow-lg">
-                    <div class="cover"></div>
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-5 col-12">
+                    {{-- <div class="header_section">
+                        <div class="row px-3 py-3">
+                            <div class="col-6">
+                                <div class="logo">
+                                    <img src="{{ asset('profile/images/tikl-logo.png') }}" class="img-fluid"
+                                        alt="" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="button d-flex align-content-center justify-content-end pt-1">
+                                    <a href="https://tikl.se/" target="_blank">Get your Card</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
 
-                    <!-------------------------------------- Profile Pic Section Started ----------------------------->
+                    <!-- Profile Image Section -->
 
-                    <div class="d-flex justify-content-center">
-                        <div class="dp">
-                            <img src="./assets/img/dp.jpg" alt=""
-                                class="img-fluid rounded-circle d-flex justify-content-center" />
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="cover_image">
+                                <img src="{{ asset(isImageExist($user->cover_photo)) }}" class="img-fluid">
+                            </div>
+                            <div class="tikl_profile_image d-flex justify-content-center">
+                                <div class="tikl_profile">
+                                    <img src="{{ asset(isImageExist($user->photo)) }}" class="img-fluid">
+                                </div>
+                            </div>
+                            <div class="tikl_profile_content text-center">
+                                <h1>{{ $user->name }}</h1>
+                                <p>{{ $user->job_title }}, {{ $user->company }}</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="d-flex gap-2 justify-content-center">
-                        <div>
-                            <h2 class="fw-bold">Todi Karoli</h2>
-                            <p class="text-center fw-bold">CEO at TODx</p>
-                        </div>
-                    </div>
-                    <p class="text-center fs-5">
-                        💡"Think Smart" 🔮"Life is short, Build a business" 👊🏻👊🏻👊🏻 ✈️
-                        @todxagency ✈️ @gotaps.me
-                    </p>
 
-                    <!--------------------------------------- Profile Pic Section Ended ------------------------------>
+                    <div class="info_section">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-11">
+                                <div class="row mx-auto mt-3">
+                                    <div class="col-5 p-1">
+                                        <div class="save_button text-center">Save Contact</div>
+                                    </div>
+                                    <div class="col-7 p-1">
+                                        <div class="change_button text-center">
+                                            Exchange Contact
+                                        </div>
+                                    </div>
+                                </div>
 
-                    <a href="#">
-                        <div class="text-center">
-                            <button class="bg-dark text-white p-2 rounded-pill px-5 shadow-lg">
-                                <h5 class="pt-1">Save to contact</h5>
-                            </button>
-                        </div>
-                    </a>
-                    <!---------------------------------------- Social Icons Started ---------------------------------->
+                                <!-- About Section -->
 
-                    <div class="row my-3">
-                        <div class="col-4 col-md-4">
-                            <a href="">
-                                <img src="./assets/img/fb.png" alt="" class="img-fluid" />
-                            </a>
-                        </div>
-                        <div class="col-4 col-md-4">
-                            <a href="">
-                                <img src="./assets/img/twitter.png" alt="" class="img-fluid" />
-                            </a>
-                        </div>
-                        <div class="col-4 col-md-4">
-                            <a href="">
-                                <img src="./assets/img/instagram.png" alt="" class="img-fluid" />
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row my-3">
-                        <div class="col-4 col-md-4">
-                            <a href="">
-                                <img src="./assets/img/linkedin.png" alt="" class="img-fluid" />
-                            </a>
-                        </div>
-                        <div class="col-4 col-md-4">
-                            <a href="">
-                                <img src="./assets/img/tiktok.png" alt="" class="img-fluid" />
-                            </a>
-                        </div>
-                        <div class="col-4 col-md-4">
-                            <a href="">
-                                <img src="./assets/img/sms.png" alt="" class="img-fluid" />
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row my-3">
-                        <div class="col-4 col-md-4">
-                            <a href="">
-                                <img src="./assets/img/mail.png" alt="" class="img-fluid" />
-                            </a>
-                        </div>
-                        <div class="col-4 col-md-4">
-                            <a href="">
-                                <img src="./assets/img/whatsapp.png" alt="" class="img-fluid" />
-                            </a>
-                        </div>
-                        <div class="col-4 col-md-4">
-                            <a href="">
-                                <img src="./assets/img/call.png" alt="" class="img-fluid" />
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row my-3">
-                        <div class="col-4 col-md-4">
-                            <a href="">
-                                <img src="./assets/img/v.png" alt="" class="img-fluid" />
-                            </a>
-                        </div>
-                        <div class="col-4 col-md-4">
-                            <a href="">
-                                <img src="./assets/img/paypal.png" alt="" class="img-fluid" />
-                            </a>
-                        </div>
-                    </div>
-                    <!---------------------------------------- Social Icons Ended ------------------------------------>
+                                {{-- <div class="about_section mt-5">
+                                    <h1>About</h1>
+                                    <p>
+                                        Creator of VittorTech and professional geek. Fulfilling a
+                                        passion of tech and helping brand awareness along the way.
+                                    </p>
+                                    <p>
+                                        Get in touch via email or social for collaborations or
+                                        partnerships!
+                                    </p>
+                                </div> --}}
 
-                    <a href="#">
-                        <div class="text-center">
-                            <button class="bg-white text-dark p-2 border-0 rounded-pill px-4 shadow-lg mb-4">
-                                <h5 class="pt-1">Create your own profile</h5>
-                            </button>
+                                <!-- Social Icons -->
+
+                                <h5 class="py-3 headings">Social networks</h5>
+                                @for ($i = 0; $i < count($userPlatforms); $i++)
+                                    <div class="row {{ $i > 0 ? 'my-3' : '' }}">
+                                        <div class="social-media-links d-flex gap-md-4 gap-1">
+                                            @for ($j = 0; $j < count($userPlatforms[$i]); $j++)
+                                                <div class="col-3">
+                                                    <a href="#" class="social">
+                                                        <img src="{{ asset(isImageExist($userPlatforms[$i][$j]->icon)) }}"
+                                                            class="img-fluid" />
+                                                    </a>
+                                                </div>
+                                            @endfor
+                                        </div>
+                                    </div>
+                                @endfor
+
+
+                                <!------------------------------------ Social Networks Section Ended --------------------------->
+
+                                <!--------------------------------------- Video Section Started -------------------------------->
+
+                                {{-- <div class="">
+                                    <h5 class="headings py-3">Video</h5>
+                                    <div class="video">
+                                        <iframe width="100%" height="250"
+                                            src="https://www.youtube.com/embed/7AMaw_XecD0"
+                                            title="Ultimate Smart Business Card Comparison - OVOU, Linq, Popl, NOMAD, Tappy, Blue, Dot, V1CE"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            allowfullscreen></iframe>
+                                        <p class="text-secondary pt-3">
+                                            Ultimate Smart Business Card Comparison (Optional)
+                                        </p>
+                                    </div>
+                                    <div class="video">
+                                        <iframe width="100%" height="250"
+                                            src="https://www.youtube.com/embed/7AMaw_XecD0"
+                                            title="Ultimate Smart Business Card Comparison - OVOU, Linq, Popl, NOMAD, Tappy, Blue, Dot, V1CE"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            allowfullscreen></iframe>
+                                        <p class="text-secondary pt-3">
+                                            Ultimate Smart Business Card Comparison (Optional)
+                                        </p>
+                                    </div>
+                                </div> --}}
+
+                                <!------------------------------------------- Video Section Ended ------------------------------>
+
+                                <!----------------------------------------- Contact Section Started ---------------------------->
+
+                                <div class="social-info">
+                                    <h5 class="headings py-3">Contact Info.</h5>
+                                    <div class="row my-3">
+                                        <div class="col-2">
+                                            <i class="bx bx-envelope fs-4"></i>
+                                        </div>
+                                        <div class="col-10">
+                                            <a href="mailto:business@vittortech.com" target="_blank"
+                                                class="d-flex justify-content-between contact-links text-decoration-none text-dark">
+                                                <div class="contact-information">
+                                                    {{ $user->email }}
+                                                </div>
+                                                <div>
+                                                    <span>
+                                                        <i class="bx bx-chevron-right"></i>
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="row my-3">
+                                        <div class="col-2">
+                                            <i class="bx bx-credit-card fs-4"></i>
+                                        </div>
+                                        <div class="col-10">
+                                            <a href="https://VittorTech.com" target="_blank"
+                                                class="d-flex justify-content-between contact-links text-decoration-none text-dark">
+                                                <div class="contact-information">VittorTech.com</div>
+                                                <div>
+                                                    <span>
+                                                        <i class="bx bx-chevron-right"></i>
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="row my-3">
+                                        <div class="col-2">
+                                            <i class="bx bx-map fs-4"></i>
+                                        </div>
+                                        <div class="col-10">
+                                            <a href="https://maps.google.com/?q=  Toronto Ontario  Canada"
+                                                target="_blank"
+                                                class="d-flex justify-content-between text-decoration-none text-dark">
+                                                <div class="contact-information">
+                                                    {{ $user->address }}
+                                                </div>
+                                                <div>
+                                                    <span>
+                                                        <i class="bx bx-chevron-right"></i>
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!------------------------------------------ Contact Section Ended ----------------------------->
+                            </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Bootstrap script -->
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
     </script>
 </body>
 
