@@ -17,6 +17,7 @@ use App\Http\Livewire\Admin\User\Users;
 use App\Models\Card;
 use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -33,21 +34,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
-
-Route::get('/card_id/{uuid}', function ($uuid) {
-
-    $user = Card::join('user_cards', 'cards.id', 'user_cards.card_id')
-        ->join('users', 'users.id', 'user_cards.user_id')
-        ->where('cards.uuid', $uuid)
-        ->get()
-        ->first();
-
-    if (!$user) {
-        return abort(404);
-    }
-
-    dd($user);
 });
 
 Route::fallback(function () {
@@ -138,6 +124,7 @@ Route::get('/card_id/{uuid}', function ($uuid) {
 
     return view('profile', compact('user', 'userPlatforms'));
 });
+
 
 
 // Profile using username
