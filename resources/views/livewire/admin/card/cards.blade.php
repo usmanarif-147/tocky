@@ -133,6 +133,7 @@
         });
 
         function copy(id) {
+
             let url = window.location.origin + '/card_id' + '/' + $('#card-' + id).val();
 
             const textArea = document.createElement("textarea");

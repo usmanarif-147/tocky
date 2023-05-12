@@ -48,6 +48,7 @@ class Cards extends Component
     public function getFilteredData()
     {
         $filteredData = Card::select(
+            'cards.id',
             'cards.uuid',
             'cards.activation_code',
             'cards.description',
