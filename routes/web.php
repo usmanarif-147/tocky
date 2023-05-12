@@ -36,8 +36,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::fallback(function () {
-    if (request()->segment(1) == 'admin') {
+    if (request()->segment(1) == 'admin' || request()->segment(1) == 'admin-login') {
         return redirect()->route('admin.login.form');
     }
     return abort(404);
@@ -85,8 +86,17 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/changePassword', [ProfileController::class, 'changePassword'])->name('profile.change.password');
 });
 
+
 // Profile using card_id
 Route::get('/card_id/{uuid}', function ($uuid) {
+
+    // $loggedUser = null;
+    // if (session()->has('user_id')) {
+    //     $loggedUser = User::where('id', session('user_id'))->first();
+    //     if (!$loggedUser->role) {
+    //         $loggedUser = null;
+    //     }
+    // }
 
     $user = Card::join('user_cards', 'cards.id', 'user_cards.card_id')
         ->join('users', 'users.id', 'user_cards.user_id')
@@ -125,10 +135,16 @@ Route::get('/card_id/{uuid}', function ($uuid) {
     return view('profile', compact('user', 'userPlatforms'));
 });
 
-
-
 // Profile using username
-Route::get('/{username}', function () {
+Route::get('user/{username}', function ($username) {
+
+    // $loggedUser = null;
+    // if (session()->has('user_id')) {
+    //     $loggedUser = User::where('id', session('user_id'))->first();
+    //     if (!$loggedUser->role) {
+    //         $loggedUser = null;
+    //     }
+    // }
 
     $user = User::where('username', request()->username)
         ->first();
@@ -163,5 +179,7 @@ Route::get('/{username}', function () {
 
     return view('profile', compact('user', 'userPlatforms'));
 });
+
+
 
 require __DIR__ . '/auth.php';
