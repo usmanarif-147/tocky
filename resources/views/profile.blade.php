@@ -24,33 +24,22 @@
     <section>
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-md-5 col-12">
-                    {{-- <div class="header_section">
-                        <div class="row px-3 py-3">
-                            <div class="col-6">
-                                <div class="logo">
-                                    <img src="{{ asset('profile/images/tikl-logo.png') }}" class="img-fluid"
-                                        alt="" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="button d-flex align-content-center justify-content-end pt-1">
-                                    <a href="https://tikl.se/" target="_blank">Get your Card</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-
+                <div class="col-md-5 col-12 shadow-lg">
                     <!-- Profile Image Section -->
 
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="cover_image">
-                                <img src="{{ asset(isImageExist($user->cover_photo)) }}" class="img-fluid">
+                    <div class="header_section shadow bg-white m-4 rounded-5">
+                        <div class="py-3">
+                            {{-- <div class="text-center">
+                                <img src="{{ asset(isImageExist($user->cover_photo)) }}" class="img-fluid" alt="" />
+                            </div> --}}
+                            <div class="cover_image p-4">
+                                <img src="{{ asset(isImageExist($user->cover_photo)) }}" class="img-fluid rounded-5"
+                                    alt="" />
                             </div>
                             <div class="tikl_profile_image d-flex justify-content-center">
                                 <div class="tikl_profile">
-                                    <img src="{{ asset(isImageExist($user->photo)) }}" class="img-fluid">
+                                    <img src="{{ asset(isImageExist($user->photo)) }}" class="img-fluid"
+                                        alt="" />
                                 </div>
                             </div>
                             <div class="tikl_profile_content text-center">
@@ -60,23 +49,19 @@
                         </div>
                     </div>
 
+
                     <div class="info_section">
                         <div class="row d-flex justify-content-center">
                             <div class="col-11">
                                 <div class="row mx-auto mt-3">
-                                    <div class="col-5 p-1">
-                                        <div class="save_button text-center">Save Contact</div>
-                                    </div>
-                                    <div class="col-7 p-1">
-                                        <div class="change_button text-center">
-                                            Exchange Contact
-                                        </div>
+                                    <div class="p-1">
+                                        <div class="change_button text-center">Save Contact</div>
                                     </div>
                                 </div>
 
                                 <!-- About Section -->
 
-                                {{-- <div class="about_section mt-5">
+                                <div class="about_section mt-5">
                                     <h1>About</h1>
                                     <p>
                                         Creator of VittorTech and professional geek. Fulfilling a
@@ -86,7 +71,7 @@
                                         Get in touch via email or social for collaborations or
                                         partnerships!
                                     </p>
-                                </div> --}}
+                                </div>
 
                                 <!-- Social Icons -->
 

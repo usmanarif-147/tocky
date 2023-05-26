@@ -26,14 +26,19 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'username' => ['required', 'min:5', 'max:25', 'regex:/^[A-Za-z][A-Za-z0-9_.]{5,25}$/', 'unique:users'],
-            'username' => ['required', 'min:5', 'max:25'],
+            'username' => ['required', 'min:5', 'max:25', 'regex:/^[A-Za-z][A-Za-z0-9_.]{5,25}$/', 'unique:users'],
             'email' => ['required', 'email', 'max:50', 'unique:users'],
             'phone' => ['sometimes', 'min:11', 'max:15', 'unique:users'],
             'password' => ['required', 'min:6', 'confirmed'],
         ];
     }
 
+    public function messages()
+    {
+        return [
+            'username.regex' => 'The username must start with a letter and can only contain letters (uppercase or lowercase), numbers, underscores, or periods. It should be between 5 and 25 characters long.'
+        ];
+    }
     // protected function failedValidation(Validator $validator)
     // {
     //     throw new HttpResponseException(response()->json([

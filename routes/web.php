@@ -90,14 +90,6 @@ Route::middleware('auth:admin')->group(function () {
 // Profile using card_id
 Route::get('/card_id/{uuid}', function ($uuid) {
 
-    // $loggedUser = null;
-    // if (session()->has('user_id')) {
-    //     $loggedUser = User::where('id', session('user_id'))->first();
-    //     if (!$loggedUser->role) {
-    //         $loggedUser = null;
-    //     }
-    // }
-
     $user = Card::join('user_cards', 'cards.id', 'user_cards.card_id')
         ->join('users', 'users.id', 'user_cards.user_id')
         ->where('cards.uuid', $uuid)
@@ -138,19 +130,18 @@ Route::get('/card_id/{uuid}', function ($uuid) {
 // Profile using username
 Route::get('user/{username}', function ($username) {
 
-    // $loggedUser = null;
-    // if (session()->has('user_id')) {
-    //     $loggedUser = User::where('id', session('user_id'))->first();
-    //     if (!$loggedUser->role) {
-    //         $loggedUser = null;
-    //     }
-    // }
-
     $user = User::where('username', request()->username)
         ->first();
     if (!$user) {
         return abort(404);
     }
+
+    $card = DB::table('user_cards')->where('user_id', $user->id)
+        ->first();
+    if (!$card) {
+        return abort(404);
+    }
+
 
     $userPlatforms = [];
     $platforms = DB::table('user_platforms')

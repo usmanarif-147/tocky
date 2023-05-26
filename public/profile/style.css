@@ -94,9 +94,9 @@ p {
 }
 
 .change_button {
-    background: #ff643a;
+    background: #3a5eff;
     border-radius: 0.5rem;
-    border: 1px solid #ff643a;
+    border: 1px solid #3a5eff;
     font-size: 14px;
     font-weight: 700;
     color: #ffffff;
@@ -106,7 +106,7 @@ p {
 }
 
 .change_button:hover {
-    background-color: #ff3b06;
+    background-color: #08249e;
 }
 
 /* About Section */
@@ -143,6 +143,7 @@ a {
     justify-content: center;
     align-items: center;
     border-radius: 15px;
+    margin: 0 !important;
 }
 
 .social:hover {
