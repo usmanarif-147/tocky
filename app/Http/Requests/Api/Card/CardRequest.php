@@ -26,10 +26,18 @@ class CardRequest extends FormRequest
     public function rules()
     {
         return [
-            'card_uuid' => ['required']
+            'card_uuid' => 'required_without_all:activation_code',
+            'activation_code' => 'required_without_all:card_uuid'
         ];
     }
 
+    public function messages()
+    {
+        return [
+            'card_uuid.required_without_all' => 'Please enter card uuid or activation_code',
+            'activation_code.required_without_all' => 'Please enter card uuid or activation_code',
+        ];
+    }
     // protected function failedValidation(Validator $validator)
     // {
     //     throw new HttpResponseException(response()->json([

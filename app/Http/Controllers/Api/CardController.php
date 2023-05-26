@@ -16,6 +16,7 @@ class CardController extends Controller
             ->select(
                 'cards.id',
                 'cards.uuid',
+                'cards.activation_code',
                 'cards.description',
                 'user_cards.status',
                 'user_cards.created_at'
@@ -29,9 +30,15 @@ class CardController extends Controller
 
     public function activateCard(CardRequest $request)
     {
-
+        $card = null;
         // check card exist
-        $card = Card::where('uuid', $request->card_uuid)->first();
+        if ($request->has('card_uuid')) {
+            $card = Card::where('uuid', $request->card_uuid)->first();
+        }
+        if ($request->has('activation_code')) {
+            $card = Card::where('activation_code', $request->activation_code)->first();
+        }
+
         if (!$card) {
             return response()->json(["message" => "Card not found"]);
         }
@@ -62,8 +69,16 @@ class CardController extends Controller
 
     public function changeCardStatus(CardRequest $request)
     {
+
+        $card = null;
         // check card exist
-        $card = Card::where('uuid', $request->card_uuid)->first();
+        if ($request->has('card_uuid')) {
+            $card = Card::where('uuid', $request->card_uuid)->first();
+        }
+        if ($request->has('activation_code')) {
+            $card = Card::where('activation_code', $request->activation_code)->first();
+        }
+
         if (!$card) {
             return response()->json(["message" => "Card not found"]);
         }
